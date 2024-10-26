@@ -10,12 +10,15 @@ if __name__ == "__main__":
         table = input_data[1:]
         table = [[j for j in i] for i in table]
 
-    n = len(table)
-    for i in range(n):
-            print(table[i])
-    print(len(table))
-    print(len(table[0]))
-    print(weights)
+    # n = len(table)
+    # for i in range(n):
+    #         print(table[i])
+    # print(len(table))
+    # print(len(table[0]))
+    # print(weights)
 
     Controller = BFS(table, weights)
-    Controller.print_info()
+    # Controller.print_info()
+    ways = Controller.find()
+    for pos in ways:
+        print(pos)

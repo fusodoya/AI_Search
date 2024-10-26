@@ -4,7 +4,6 @@ from board_folder.object_board import *
 
 class Search(ABC):
     def __init__(self, table, weights):
-        print("search")
         self.const_board = ConstBoard(table)
         self.object_board = ObjectBoard(table, weights)
 
