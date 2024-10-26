@@ -47,7 +47,7 @@ class BFS(Search):
                 x = Ares_pos[0] + dx[i]
                 y = Ares_pos[1] + dy[i]
 
-                new_state = current_state
+                new_state = list(current_state)
                 if ((x, y) in stone_checker): # Co da tai vi tri (x, y)
                     if ((x + dx[i], y + dy[i]) in stone_checker
                     or self.const_board.board[x + dx[i]][y + dy[i]] == WALL):
@@ -59,6 +59,8 @@ class BFS(Search):
                         stone_checker.remove((x, y))
                         stone_checker.add((x + dx[i], y + dy[i]))
                 else:
+                    if (self.const_board.board[x][y] == WALL):
+                        continue
                     new_state[0] = (x, y)
                 
                 hash_code = tuple(new_state)

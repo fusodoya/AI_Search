@@ -31,5 +31,6 @@ class ObjectBoard:
         for i in range(self.height):
             for j in range(self.width):
                 if (self.board[i][j] != None):
+                    print("(" + str(i) + ", " + str(j) + ")")
                     self.board[i][j].print_info()
     
