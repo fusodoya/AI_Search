@@ -19,6 +19,8 @@ if __name__ == "__main__":
 
     Controller = BFS(table, weights)
     Controller.print_info()
+
+    print("")
+    print("Methods: ")
     ways = Controller.find()
-    for pos in ways:
-        print(pos)
+    print(ways)

@@ -12,6 +12,15 @@ class BFS(Search):
     def print_info(self):
         super().print_info()
 
+    def find_move_code(self, prev_pos, current_pos):
+        if (current_pos[0] - prev_pos[0] == 1):
+            return 'd'
+        if (current_pos[0] - prev_pos[0] == -1):
+            return 'u'
+        if (current_pos[1] - prev_pos[1] == 1):
+            return 'r'
+        return 'l'
+
     def find(self):
         self.checker = {}
         self.trade = {}
@@ -69,12 +78,24 @@ class BFS(Search):
                     self.trade[hash_code] = self.final_state
                     self.warehouse.append(hash_code)
 
-        ways = []
+        ways = ''
         current_state = self.final_state
         while (True):
-            if (current_state[0] == (-1, -1)):
+            prev_state = self.trade[current_state]
+            if (prev_state[0] == (-1, -1)):
                 break
-            ways.append(current_state[0])
-            current_state = self.trade[current_state]
-        ways = list(reversed(ways))
+
+            is_push = False
+            for i in range(Stone.cnt):
+                if (prev_state[i + 1] != current_state[i + 1]):
+                    is_push = True
+                    break
+            
+            move_code = self.find_move_code(prev_state[0], current_state[0])
+            if (is_push):
+                move_code = move_code.upper()
+
+            ways += move_code
+            current_state = prev_state
+        ways = ways[::-1]       
         return ways

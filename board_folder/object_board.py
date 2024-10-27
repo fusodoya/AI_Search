@@ -10,8 +10,8 @@ class ObjectBoard:
 
         self.board = [[None for _ in range(self.width)] for _ in range(self.height)]
         
-        for i in range(self.height):
-            for j in range(self.width):
+        for j in range(self.width):
+            for i in range(self.height):
                 if (table[i][j] == STONE):
                     self.board[i][j] = Stone(weights[Stone.cnt], False)
                 if (table[i][j] == STONE_ON_SWITCH):
