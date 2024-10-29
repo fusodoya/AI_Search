@@ -1,4 +1,4 @@
-from search import Search, Algorithm
+from search import Search, Algorithm, SearchResult
 
 if __name__ == "__main__":
     with open('input/input-01.txt', 'r') as f:
@@ -11,9 +11,5 @@ if __name__ == "__main__":
         table = [[j for j in i] for i in table]
     
     controller = Search(table, weights)
-    controller.print_info()
-
-    print("")
-    print("Methods: ")
-    ways = controller.search(Algorithm.A_STAR)
-    print(ways)
+    result = controller.search(Algorithm.BFS)
+    result.save_result('output-01.txt')
