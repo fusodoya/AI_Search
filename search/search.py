@@ -33,31 +33,32 @@ class Search:
         hash_code = tuple(self.entity_positions)
         self.visited_states[hash_code] = True
         
-        
         self.trade[hash_code] = ((-1, -1), (-1, -1))
         self.warehouse = SearchFrontier(algorithm)
-        self.warehouse.add(hash_code)
+        __weight = 0
+        self.warehouse.add((__weight, hash_code))
 
         dx = [-1, 0, 1, 0]
         dy = [0, -1, 0, 1]
         
-        __weight = 0
         __node = 0
         while (True):
             self.final_state = self.warehouse.pop()
+            __weight = self.final_state[0]
             __node += 1
             cnt = 0
             self.stone_checker = set()
             for i in range(self.__num_stones):
-                stone_pos = self.final_state[i + 1]
+                stone_pos = self.final_state[1][i + 1]
                 cnt += (self.__static_board.board[stone_pos[0]][stone_pos[1]] == BoardSymbol.SWITCH.value)
                 self.stone_checker.add(stone_pos)
             if (cnt == self.__num_stones):
                 break
             
-            current_state = list(self.final_state)
+            current_state = list(self.final_state[1])
             Ares_pos = current_state[0]
             for i in range(4):
+                new_weight = __weight
                 x = Ares_pos[0] + dx[i]
                 y = Ares_pos[1] + dy[i]
 
@@ -72,9 +73,12 @@ class Search:
                             if (self.__is_corner(stone_pos)):
                                 continue
 
-                        idx = current_state.index((x, y))
-                        new_state[idx] = stone_pos
+                        
                         new_state[0] = (x, y)
+
+                        idx = current_state.index((x, y))
+                        new_weight += self.__stone_weights[idx - 1]
+                        new_state[idx] = stone_pos
                         self.stone_checker.remove((x, y))
                         self.stone_checker.add(stone_pos)
                 else:
@@ -85,26 +89,25 @@ class Search:
                 hash_code = tuple(new_state)
                 if (not self.visited_states.get(hash_code, False)):
                     self.visited_states[hash_code] = True
-                    self.trade[hash_code] = self.final_state
-                    self.warehouse.add(hash_code)
+                    self.trade[hash_code] = self.final_state[1]
+                    self.warehouse.add((new_weight, hash_code))
 
         ways = ''
-        current_state = self.final_state
+        current_state = self.final_state[1]
         while (True):
             prev_state = self.trade[current_state]
             if (prev_state[0] == (-1, -1)):
                 break
 
-            stone_id = 0
+            is_push = 0
             for i in range(self.__num_stones):
                 if (prev_state[i + 1] != current_state[i + 1]):
-                    stone_id = i + 1
+                    is_push = i + 1
                     break
             
             move_code = self.__find_move_code(prev_state[0], current_state[0])
-            if (stone_id != 0):
+            if (is_push != 0):
                 move_code = move_code.upper()
-                __weight += self.__stone_weights[stone_id -1]
 
             ways += move_code
             current_state = prev_state
