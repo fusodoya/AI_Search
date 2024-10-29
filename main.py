@@ -1,4 +1,4 @@
-from search_folder.bfs import *
+from search import Search, Algorithm
 
 if __name__ == "__main__":
     with open('input/input-01.txt', 'r') as f:
@@ -9,18 +9,11 @@ if __name__ == "__main__":
 
         table = input_data[1:]
         table = [[j for j in i] for i in table]
-
-    # n = len(table)
-    # for i in range(n):
-    #         print(table[i])
-    # print(len(table))
-    # print(len(table[0]))
-    # print(weights)
-
-    Controller = BFS(table, weights)
-    Controller.print_info()
+    
+    controller = Search(table, weights)
+    controller.print_info()
 
     print("")
     print("Methods: ")
-    ways = Controller.find()
+    ways = controller.search(Algorithm.A_STAR)
     print(ways)
