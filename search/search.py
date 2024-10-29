@@ -47,14 +47,14 @@ class Search:
             __node += 1
             self.final_state = self.warehouse.pop()
             cnt = 0
-            stone_checker = set()
+            self.stone_checker = set()
             for i in range(self.__num_stones):
                 stone_pos = self.final_state[i + 1]
                 cnt += (self.__static_board.board[stone_pos[0]][stone_pos[1]] == BoardSymbol.SWITCH.value)
-                stone_checker.add(stone_pos)
+                self.stone_checker.add(stone_pos)
             if (cnt == self.__num_stones):
                 break
-
+            
             current_state = list(self.final_state)
             Ares_pos = current_state[0]
             for i in range(4):
@@ -62,16 +62,21 @@ class Search:
                 y = Ares_pos[1] + dy[i]
 
                 new_state = list(current_state)
-                if ((x, y) in stone_checker): # Co da tai vi tri (x, y)
-                    if ((x + dx[i], y + dy[i]) in stone_checker
+                if ((x, y) in self.stone_checker): # Co da tai vi tri (x, y)
+                    if ((x + dx[i], y + dy[i]) in self.stone_checker
                     or self.__static_board.board[x + dx[i]][y + dy[i]] == BoardSymbol.WALL.value):
                         continue
                     else:
+                        stone_pos = (x + dx[i], y + dy[i])
+                        if (self.__static_board.board[stone_pos[0]][stone_pos[1]] != BoardSymbol.SWITCH.value):
+                            if (self.__is_corner(stone_pos)):
+                                continue
+
                         idx = current_state.index((x, y))
-                        new_state[idx] = (x + dx[i], y + dy[i])
+                        new_state[idx] = stone_pos
                         new_state[0] = (x, y)
-                        stone_checker.remove((x, y))
-                        stone_checker.add((x + dx[i], y + dy[i]))
+                        self.stone_checker.remove((x, y))
+                        self.stone_checker.add(stone_pos)
                 else:
                     if (self.__static_board.board[x][y] == BoardSymbol.WALL.value):
                         continue
@@ -107,6 +112,7 @@ class Search:
         
         __end_time = time.time()
         __mem_after = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+
         __time = (__end_time - __start_time) * 1000
         __memory = (__mem_after - __mem_before) / 1024
         return SearchResult(algorithm, len(ways), __weight, __node, __time, __memory, ways)
@@ -119,3 +125,11 @@ class Search:
         if (current_pos[1] - prev_pos[1] == 1):
             return 'r'
         return 'l'
+    
+    def __is_corner(self, pos: tuple) -> bool:
+        (x, y) = pos
+        return ((self.__static_board.board[x + 1][y] == BoardSymbol.WALL.value
+        or self.__static_board.board[x - 1][y] == BoardSymbol.WALL.value)
+        and
+        (self.__static_board.board[x][y + 1] == BoardSymbol.WALL.value
+        or self.__static_board.board[x][y - 1] == BoardSymbol.WALL.value))
