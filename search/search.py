@@ -44,8 +44,8 @@ class Search:
         __weight = 0
         __node = 0
         while (True):
-            __node += 1
             self.final_state = self.warehouse.pop()
+            __node += 1
             cnt = 0
             self.stone_checker = set()
             for i in range(self.__num_stones):
@@ -95,16 +95,16 @@ class Search:
             if (prev_state[0] == (-1, -1)):
                 break
 
-            is_push = 0
+            stone_id = 0
             for i in range(self.__num_stones):
                 if (prev_state[i + 1] != current_state[i + 1]):
-                    is_push = i + 1
+                    stone_id = i + 1
                     break
             
             move_code = self.__find_move_code(prev_state[0], current_state[0])
-            if (is_push != 0):
+            if (stone_id != 0):
                 move_code = move_code.upper()
-                __weight += self.__stone_weights[is_push -1]
+                __weight += self.__stone_weights[stone_id -1]
 
             ways += move_code
             current_state = prev_state
