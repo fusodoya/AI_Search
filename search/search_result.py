@@ -1,7 +1,7 @@
 from .search_frontier import Algorithm
 
 class SearchResult:
-    def __init__(self, type: Algorithm, step: int, weight: int, node: int, time: float, memory: float, ways: str):
+    def __init__(self, type: Algorithm, step: int = -1, weight: int = 0, node: int = 0, time: float = 0.0, memory: float = 0.0, ways: str = ''):
         self.__type = type
         self.__step = step
         self.__weight = weight

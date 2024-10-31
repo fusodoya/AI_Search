@@ -43,6 +43,8 @@ class Search:
         
         __node = 0
         while (True):
+            if (self.warehouse.is_empty()):
+                return SearchResult(algorithm)
             self.final_state = self.warehouse.pop()
             __weight = self.final_state[0]
             __node += 1
