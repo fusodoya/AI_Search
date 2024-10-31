@@ -1,5 +1,6 @@
 from board import StaticBoard, DynamicBoard, BoardSymbol
-from .search_frontier import Algorithm, SearchFrontier
+from .search_frontier import SearchFrontier
+from .algorithm import Algorithm
 from .search_result import SearchResult
 import time
 import resource

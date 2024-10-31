@@ -1,4 +1,4 @@
-from .search_frontier import Algorithm
+from .algorithm import Algorithm
 
 class SearchResult:
     def __init__(self, type: Algorithm, step: int, weight: int, node: int, time: float, memory: float, ways: str):
