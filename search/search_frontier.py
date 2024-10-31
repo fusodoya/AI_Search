@@ -1,13 +1,7 @@
 from collections import deque
 import heapq
-from enum import Enum
 from typing import Any, List, Union, Callable
-
-class Algorithm(Enum):
-    DFS = 1
-    BFS = 2
-    UCS = 3
-    A_STAR = 4
+from .algorithm import Algorithm
 
 class SearchFrontier:
     def __init__(self, algorithm: Algorithm):
