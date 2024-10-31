@@ -36,7 +36,7 @@ class Search:
         
         self.trade[hash_code] = ((-1, -1), (-1, -1))
         self.warehouse = SearchFrontier(algorithm)
-        __weight = 0
+        __weight = 0 + self.__heuristics(hash_code)
         self.warehouse.add((__weight, hash_code))
 
         dx = [-1, 0, 1, 0]
@@ -92,6 +92,7 @@ class Search:
                 if (not self.visited_states.get(hash_code, False)):
                     self.visited_states[hash_code] = True
                     self.trade[hash_code] = self.final_state[1]
+                    new_weight += self.__heuristics(hash_code)
                     self.warehouse.add((new_weight, hash_code))
 
         ways = ''
@@ -121,8 +122,8 @@ class Search:
         
         return SearchResult(algorithm, len(ways), __weight, __node, __time, __memory, ways)
     
-    def __heuristics(self):
-        pass
+    def __heuristics(self, state) -> int:
+        return 0
     
     def __find_move_code(self, prev_pos, current_pos, is_push) -> str:
         if current_pos[0] - prev_pos[0] == 1:
