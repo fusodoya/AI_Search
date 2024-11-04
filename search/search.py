@@ -16,7 +16,7 @@ class Search:
         self.__static_board.print_board()
         self.__dynamic_board.print_board()
     
-    def search(self, algorithm: Algorithm):
+    def search(self, algorithm: Algorithm) -> SearchResult:
         __start_time = time.time()
         __mem_before = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
         self.visited_states = {}
@@ -36,7 +36,7 @@ class Search:
         
         self.trade[hash_code] = ((-1, -1), (-1, -1))
         self.warehouse = SearchFrontier(algorithm)
-        __weight = 0
+        __weight = 0 + self.__heuristics(hash_code)
         self.warehouse.add((__weight, hash_code))
 
         dx = [-1, 0, 1, 0]
@@ -49,13 +49,14 @@ class Search:
             self.final_state = self.warehouse.pop()
             __weight = self.final_state[0]
             __node += 1
-            cnt = 0
+            num_stones_in_switch = 0
             self.stone_checker = set()
             for i in range(self.__num_stones):
                 stone_pos = self.final_state[1][i + 1]
-                cnt += (self.__static_board.board[stone_pos[0]][stone_pos[1]] == BoardSymbol.SWITCH.value)
+                num_stones_in_switch += (self.__static_board.board[stone_pos[0]][stone_pos[1]] == BoardSymbol.SWITCH.value)
                 self.stone_checker.add(stone_pos)
-            if (cnt == self.__num_stones):
+                
+            if (num_stones_in_switch == self.__num_stones):
                 break
             
             current_state = list(self.final_state[1])
@@ -93,6 +94,7 @@ class Search:
                 if (not self.visited_states.get(hash_code, False)):
                     self.visited_states[hash_code] = True
                     self.trade[hash_code] = self.final_state[1]
+                    new_weight += self.__heuristics(hash_code)
                     self.warehouse.add((new_weight, hash_code))
 
         ways = ''
@@ -108,12 +110,10 @@ class Search:
                     is_push = i + 1
                     break
             
-            move_code = self.__find_move_code(prev_state[0], current_state[0])
-            if (is_push != 0):
-                move_code = move_code.upper()
-
+            move_code = self.__find_move_code(prev_state[0], current_state[0], is_push)
             ways += move_code
             current_state = prev_state
+        
         ways = ways[::-1]
         
         __end_time = time.time()
@@ -121,16 +121,26 @@ class Search:
 
         __time = (__end_time - __start_time) * 1000
         __memory = (__mem_after - __mem_before) / 1024
+        
         return SearchResult(algorithm, len(ways), __weight, __node, __time, __memory, ways)
     
-    def __find_move_code(self, prev_pos, current_pos) -> str:
-        if (current_pos[0] - prev_pos[0] == 1):
-            return 'd'
-        if (current_pos[0] - prev_pos[0] == -1):
-            return 'u'
-        if (current_pos[1] - prev_pos[1] == 1):
-            return 'r'
-        return 'l'
+    def __heuristics(self, state) -> int:
+        return 0
+    
+    def __find_move_code(self, prev_pos, current_pos, is_push) -> str:
+        if current_pos[0] - prev_pos[0] == 1:
+            move_code = 'd'
+        elif current_pos[0] - prev_pos[0] == -1:
+            move_code = 'u'
+        elif current_pos[1] - prev_pos[1] == 1:
+            move_code = 'r'
+        else:
+            move_code = 'l'
+        
+        if (is_push != 0):
+            move_code = move_code.upper()
+            
+        return move_code
     
     def __is_corner(self, pos: tuple) -> bool:
         (x, y) = pos
