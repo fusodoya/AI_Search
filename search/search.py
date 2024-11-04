@@ -21,6 +21,7 @@ class Search:
         __mem_before = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
         self.visited_states = {}
         self.trade = {}
+        self.virtualWall = [[False for _ in range(self.__static_board.width)] for _ in range(self.__static_board.height)]
 
         # save position of entities
         self.entity_positions = [(0, 0) for _ in range(self.__num_stones + 1)]
@@ -58,6 +59,9 @@ class Search:
                 
             if (num_stones_in_switch == self.__num_stones):
                 break
+
+            # if (self.__advance_check()):
+            #     continue
             
             current_state = list(self.final_state[1])
             Ares_pos = current_state[0]
@@ -76,8 +80,7 @@ class Search:
                         if (self.__static_board.board[stone_pos[0]][stone_pos[1]] != BoardSymbol.SWITCH.value):
                             if (self.__is_corner(stone_pos)):
                                 continue
-
-                        
+                      
                         new_state[0] = (x, y)
 
                         idx = current_state.index((x, y))
@@ -145,3 +148,85 @@ class Search:
         and
         (self.__static_board.board[x][y + 1] == BoardSymbol.WALL.value
         or self.__static_board.board[x][y - 1] == BoardSymbol.WALL.value))
+
+    # Advance update
+    def __advance_check(self):
+        for i in range(self.__num_stones):
+            stone_pos = self.final_state[1][i + 1]
+
+            if (self.__is_horizon_wall(stone_pos)):
+                if (self.__dead_block_horizon(stone_pos)):
+                    return True
+            if (self.__is_vertical_wall(stone_pos)):
+                if (self.__dead_block_vertical(stone_pos)):
+                    return True
+        return False
+
+    def __is_horizon_wall(self, pos: tuple) -> bool:
+        (x, y) = pos
+        return (self.__static_board.board[x][y + 1] == BoardSymbol.WALL.value
+        or self.__static_board.board[x][y - 1] == BoardSymbol.WALL.value
+        or self.virtualWall[x][y + 1]
+        or self.virtualWall[x][y - 1])
+
+    def __is_vertical_wall(self, pos: tuple) -> bool:
+        (x, y) = pos
+        return (self.__static_board.board[x + 1][y] == BoardSymbol.WALL.value
+        or self.__static_board.board[x - 1][y] == BoardSymbol.WALL.value
+        or self.virtualWall[x + 1][y]
+        or self.virtualWall[x - 1][y])
+
+    def __dead_block_horizon(self, pos: tuple) -> bool:
+        (x, y) = pos
+        self.virtualWall[x][y] = True
+
+        nearStone = (x + 1, y)
+        if (nearStone in self.stone_checker):
+            if (self.__is_horizon_wall(nearStone)):
+                self.virtualWall[x][y] = False
+                return True
+            if (self.__dead_block_vertical(nearStone)):
+                self.virtualWall[x][y] = False
+                return True
+
+        nearStone = (x - 1, y)
+        if (nearStone in self.stone_checker):
+            if (self.__is_horizon_wall(nearStone)):
+                self.virtualWall[x][y] = False
+                return True
+            if (self.__dead_block_vertical(nearStone)):
+                self.virtualWall[x][y] = False
+                return True
+        
+        self.virtualWall[x][y] = False
+        return False
+
+    def __dead_block_vertical(self, pos: tuple) -> bool:
+        (x, y) = pos
+        self.virtualWall[x][y] = True
+
+        nearStone = (x, y + 1)
+        if (nearStone in self.stone_checker):
+            if (self.__is_vertical_wall(nearStone)):
+                self.virtualWall[x][y] = False
+                return True
+            if (self.__dead_block_horizon(nearStone)):
+                self.virtualWall[x][y] = False
+                return True
+
+        nearStone = (x, y - 1)
+        if (nearStone in self.stone_checker):
+            if (self.__is_vertical_wall(nearStone)):
+                self.virtualWall[x][y] = False
+                return True
+            if (self.__dead_block_horizon(nearStone)):
+                self.virtualWall[x][y] = False
+                return True
+        
+        self.virtualWall[x][y] = False
+        return False
+        
+        
+
+        
+        
