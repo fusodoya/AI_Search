@@ -1,7 +1,7 @@
 from search import Search, Algorithm, SearchResult
 
 if __name__ == "__main__":
-    test_id = str(3)
+    test_id = str(7)
     while (len(test_id) < 2):
         test_id = '0' + test_id
     inp_dir = 'input/input-' + test_id + '.txt'

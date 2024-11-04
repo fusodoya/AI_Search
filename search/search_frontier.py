@@ -2,6 +2,7 @@ from collections import deque
 import heapq
 from typing import Any, List, Union, Callable
 from .algorithm import Algorithm
+from .heuristics import Heuristics
 
 class SearchFrontier:
     def __init__(self, algorithm: Algorithm):
@@ -45,7 +46,9 @@ class SearchFrontier:
             return self.frontier[-1]  # Peek at the top of the stack
         elif self.__algorithm == Algorithm.BFS:
             return self.frontier[0]  # Peek at the front of the queue
-        else:  # UCS or A*
+        elif self.__algorithm == Algorithm.UCS:
+            return self.frontier[0]  # Peek at the front of the queue
+        else:
             return self.frontier[0]  # Peek at the top of the priority queue
         
     def __get_add_function(self) -> Callable[[Any], None]:
@@ -53,32 +56,43 @@ class SearchFrontier:
             return self._add_dfs
         elif self.__algorithm == Algorithm.BFS:
             return self._add_bfs
-        else:  # UCS or A*
-            return self._add_priority
+        elif self.__algorithm == Algorithm.UCS:
+            return self._add_ucs
+        else: 
+            return self._add_a_star
 
     def __get_pop_function(self) -> Callable[[], Any]:
         if self.__algorithm == Algorithm.DFS:
             return self._pop_dfs
         elif self.__algorithm == Algorithm.BFS:
             return self._pop_bfs
-        else:  # UCS or A*
-            return self._pop_priority
+        elif self.__algorithm == Algorithm.UCS:
+            return self._pop_ucs
+        else:
+            return self._pop_a_star
 
+    # Add
     def _add_dfs(self, item: Any) -> None:
         self.frontier.append(item)  # Push onto stack
 
     def _add_bfs(self, item: Any) -> None:
         self.frontier.append(item)  # Enqueue for BFS
 
-    def _add_priority(self, item: Any) -> None:
+    def _add_ucs(self, item: Any) -> None:
         heapq.heappush(self.frontier, item)  # Push into priority queue
 
+    def _add_a_star(self, item: Any) -> None:
+        heapq.heappush(self.frontier, (item[0] + Heuristics.cal(item[1]), item))  # Push into priority queue
+
+    # Pop
     def _pop_dfs(self) -> Any:
         return self.frontier.pop()  # Pop from stack
 
     def _pop_bfs(self) -> Any:
         return self.frontier.popleft()  # Dequeue from BFS
 
-    def _pop_priority(self) -> Any:
+    def _pop_ucs(self) -> Any:
         return heapq.heappop(self.frontier)  # Pop from priority queue
 
+    def _pop_a_star(self) -> None:
+        return heapq.heappop(self.frontier)[1]  # Pop from priority queue
