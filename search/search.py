@@ -7,8 +7,8 @@ import resource
 
 class Search:
     def __init__(self, initial_board: list[list[str]], stone_weights: tuple):
-        self.__static_board = StaticBoard(initial_board)
         self.__dynamic_board = DynamicBoard(initial_board, stone_weights)
+        self.__static_board = StaticBoard(initial_board)
         self.__num_stones = self.__dynamic_board.num_stones
         self.__stone_weights = stone_weights
         

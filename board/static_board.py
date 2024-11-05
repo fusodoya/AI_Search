@@ -7,7 +7,11 @@ class StaticBoard(BoardInterface):
         super().__init__(initial_board)
         for h in range(self.height):
             for w in range(self.width):
-                if self._board[h][w] not in {BoardSymbol.WALL.value, BoardSymbol.SWITCH.value}:
+                if self._board[h][w] in {BoardSymbol.SWITCH.value,
+                BoardSymbol.STONE_ON_SWITCH.value, 
+                BoardSymbol.ARES_ON_SWITCH.value}:
+                    self._board[h][w] = BoardSymbol.SWITCH.value
+                elif (self._board[h][w] != BoardSymbol.WALL.value):
                     self._board[h][w] = BoardSymbol.FREE_SPACE.value
     
     def print_board(self) -> None:

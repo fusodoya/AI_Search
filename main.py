@@ -1,7 +1,6 @@
 from search import Search, Algorithm, SearchResult
 
-if __name__ == "__main__":
-    test_id = str(5)
+def test(test_id: str, algorithm: Algorithm):
     while (len(test_id) < 2):
         test_id = '0' + test_id
     inp_dir = 'input/input-' + test_id + '.txt'
@@ -25,5 +24,11 @@ if __name__ == "__main__":
                 row.append(' ')
     
         controller = Search(table, tuple(weights))
-        result = controller.search(Algorithm.DFS)
+        result = controller.search(algorithm)
         result.save_result(out_dir)
+
+if __name__ == "__main__":
+
+    test(str(10), Algorithm.A_STAR)
+    # for i in range(1, 8):
+    #     test(str(i))

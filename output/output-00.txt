@@ -1,0 +1,3 @@
+A_STAR
+Steps: 24, Weight: 405, Node: 3959, Time (ms): 40.393, Memory (MB): 0.992
+lluRurrDrdLLLuRRRRRRRurD
