@@ -8,6 +8,7 @@ class DynamicBoard(BoardInterface):
         super().__init__(initial_board)
         
         self.__num_stones = 0
+        Stone.reset()
         for h in range(self.height):
             for w in range(self.width):
                 symbol = initial_board[h][w]

@@ -41,3 +41,6 @@ class Controller:
 
             result = self.controller.search(Algorithm.A_STAR)
             result.save_result(outstream)
+
+    def exec(self, algorithm: Algorithm):
+        pass

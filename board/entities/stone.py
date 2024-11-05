@@ -9,6 +9,9 @@ class Stone(EntityInterface):
         
         Stone.__stones_count += 1
         self.__id = Stone.__stones_count
+
+    def reset():
+        Stone.__stones_count = 0
     
     def print_info(self):
         super().print_info()

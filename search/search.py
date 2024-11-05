@@ -36,7 +36,7 @@ class Search:
         hash_code = tuple(self.entity_positions)
         __weight = 0
         __step = 0
-        self.min_steps[hash_code] = __step
+        self.min_steps[hash_code] = (__weight, __step)
         
         self.trade[hash_code] = ((-1, -1), (-1, -1))
         self.warehouse = SearchFrontier(algorithm, self.__static_board, self.__stone_weights)
@@ -53,8 +53,8 @@ class Search:
             (__weight, __step) = self.final_state[0]
 
             optimize_step = self.min_steps.get(self.final_state[1])
-            if (__step != optimize_step):
-                self.warehouse.add(((__weight, optimize_step), self.final_state[1]))
+            if ((__weight, __step) != optimize_step):
+                self.warehouse.add((optimize_step, self.final_state[1]))
                 continue
 
             __node += 1
@@ -105,13 +105,13 @@ class Search:
                 
                 hash_code = tuple(new_state)
 
-                current_step = self.min_steps.get(hash_code, -1)
-                if (current_step == -1):
-                    self.min_steps[hash_code] = new_step
+                current_step = self.min_steps.get(hash_code, (-1, -1))
+                if (current_step == (-1, -1)):
+                    self.min_steps[hash_code] = (new_weight, new_step)
                     self.trade[hash_code] = self.final_state[1]
                     self.warehouse.add(((new_weight, new_step), hash_code))
-                elif (new_step < current_step):
-                    self.min_steps[hash_code] = new_step
+                elif ((new_weight, new_step) < current_step):
+                    self.min_steps[hash_code] = (new_weight, new_step)
                     self.trade[hash_code] = self.final_state[1]
 
         ways = ''
@@ -139,7 +139,7 @@ class Search:
         __time = (__end_time - __start_time) * 1000
         __memory = (__mem_after - __mem_before) / 1024
         
-        return SearchResult(algorithm, __step, __weight, __node, __time, __memory, ways)
+        return SearchResult(algorithm, len(ways), __weight, __node, __time, __memory, ways)
     
     def __find_move_code(self, prev_pos, current_pos, is_push) -> str:
         if current_pos[0] - prev_pos[0] == 1:
