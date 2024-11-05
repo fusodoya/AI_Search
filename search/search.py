@@ -19,7 +19,7 @@ class Search:
     def search(self, algorithm: Algorithm) -> SearchResult:
         __start_time = time.time()
         __mem_before = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-        self.visited_states = {}
+        self.min_weights = {}
         self.trade = {}
         self.virtualWall = [[False for _ in range(self.__static_board.width)] for _ in range(self.__static_board.height)]
 
@@ -33,12 +33,13 @@ class Search:
 
         # save the state
         hash_code = tuple(self.entity_positions)
-        self.visited_states[hash_code] = True
+        __weight = 0
+        __step = 0
+        self.min_weights[hash_code] = (__weight, __step)
         
         self.trade[hash_code] = ((-1, -1), (-1, -1))
         self.warehouse = SearchFrontier(algorithm)
-        __weight = 0
-        self.warehouse.add((__weight, hash_code))
+        self.warehouse.add(((__weight, __step), hash_code))
 
         dx = [-1, 0, 1, 0]
         dy = [0, -1, 0, 1]
@@ -48,7 +49,7 @@ class Search:
             if (self.warehouse.is_empty()):
                 return SearchResult(algorithm)
             self.final_state = self.warehouse.pop()
-            __weight = self.final_state[0]
+            (__weight, __step) = self.final_state[0]
             __node += 1
             num_stones_in_switch = 0
             self.stone_checker = set()
@@ -59,12 +60,16 @@ class Search:
                 
             if (num_stones_in_switch == self.__num_stones):
                 break
+            if((__weight, __step) > self.min_weights.get(self.final_state[1], (0, 0))):
+                continue
 
             # if (self.__advance_check()):
             #     continue
             
             current_state = list(self.final_state[1])
             Ares_pos = current_state[0]
+            new_step = __step + 1
+
             for i in range(4):
                 new_weight = __weight
                 x = Ares_pos[0] + dx[i]
@@ -94,10 +99,11 @@ class Search:
                     new_state[0] = (x, y)
                 
                 hash_code = tuple(new_state)
-                if (not self.visited_states.get(hash_code, False)):
-                    self.visited_states[hash_code] = True
+
+                if ((new_weight, new_step) < self.min_weights.get(hash_code, (new_weight + 1, new_step))):
+                    self.min_weights[hash_code] = (new_weight, new_step)
                     self.trade[hash_code] = self.final_state[1]
-                    self.warehouse.add((new_weight, hash_code))
+                    self.warehouse.add(((new_weight, new_step), hash_code))
 
         ways = ''
         current_state = self.final_state[1]
@@ -124,7 +130,7 @@ class Search:
         __time = (__end_time - __start_time) * 1000
         __memory = (__mem_after - __mem_before) / 1024
         
-        return SearchResult(algorithm, len(ways), __weight, __node, __time, __memory, ways)
+        return SearchResult(algorithm, __step, __weight, __node, __time, __memory, ways)
     
     def __find_move_code(self, prev_pos, current_pos, is_push) -> str:
         if current_pos[0] - prev_pos[0] == 1:
