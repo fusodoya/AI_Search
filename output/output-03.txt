@@ -1,3 +1,3 @@
-BFS
-Steps: 16, Weight: 695, Node: 10074, Time (ms): 75.136, Memory (MB): 4.102
-uLulDrrRRRRRRurD
+A_STAR
+Steps: 24, Weight: 405, Node: 30499, Time (ms): 335.311, Memory (MB): 6.543
+lluRurrDrdLLLuRRRRRRRurD

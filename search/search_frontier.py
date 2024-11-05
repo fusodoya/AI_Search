@@ -3,9 +3,11 @@ import heapq
 from typing import Any, List, Union, Callable
 from .algorithm import Algorithm
 from .heuristics import Heuristics
+from board import StaticBoard
+
 
 class SearchFrontier:
-    def __init__(self, algorithm: Algorithm):
+    def __init__(self, algorithm: Algorithm, static_board: StaticBoard, stone_weights: tuple):
         if not isinstance(algorithm, Algorithm):
             raise ValueError(f"Unsupported algorithm: {algorithm}")
 
@@ -13,6 +15,7 @@ class SearchFrontier:
         self.frontier: Union[List[Any], deque] = self.__initialize_frontier()
         self._add_func: Callable[[Any], None] = self.__get_add_function()
         self._pop_func: Callable[[], Any] = self.__get_pop_function()
+        self.__heuristic_calculator = Heuristics(static_board, stone_weights)
 
     def __initialize_frontier(self) -> Union[List[Any], deque]:
         if self.__algorithm == Algorithm.DFS:
@@ -82,7 +85,7 @@ class SearchFrontier:
         heapq.heappush(self.frontier, item)  # Push into priority queue
 
     def _add_a_star(self, item: Any) -> None:
-        heapq.heappush(self.frontier, (item[0] + Heuristics.cal(item[1]), item))  # Push into priority queue
+        heapq.heappush(self.frontier, (item[0][0] + self.__heuristic_calculator.calculate(item[1]), item))  # Push into priority queue
 
     # Pop
     def _pop_dfs(self) -> Any:

@@ -2,17 +2,16 @@ from board import StaticBoard, DynamicBoard, BoardSymbol
 from .search_frontier import SearchFrontier
 from .algorithm import Algorithm
 from .search_result import SearchResult
-from .heuristics import Heuristics
 import time
 import resource
 
 class Search:
-    def __init__(self, initial_board: list[list[str]], stone_weights: list):
+    def __init__(self, initial_board: list[list[str]], stone_weights: tuple):
         self.__static_board = StaticBoard(initial_board)
         self.__dynamic_board = DynamicBoard(initial_board, stone_weights)
         self.__num_stones = self.__dynamic_board.num_stones
         self.__stone_weights = stone_weights
-        self.__heuristic_calculator = Heuristics(self.__static_board)
+        
         
     def print_info(self):
         self.__static_board.print_board()
@@ -40,7 +39,7 @@ class Search:
         self.min_steps[hash_code] = __step
         
         self.trade[hash_code] = ((-1, -1), (-1, -1))
-        self.warehouse = SearchFrontier(algorithm)
+        self.warehouse = SearchFrontier(algorithm, self.__static_board, self.__stone_weights)
         self.warehouse.add(((__weight, __step), hash_code))
 
         dx = [-1, 0, 1, 0]
