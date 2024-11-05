@@ -10,12 +10,11 @@ class SearchResult:
         self.__memory = memory
         self.__ways = ways
     
-    def save_result(self, file_path: str):
-        with open(file_path, 'w') as outstream:
-            outstream.write(f"{self.__type.name}\n")
-            outstream.write(f"Steps: {self.__step}, ")
-            outstream.write(f"Weight: {self.__weight}, ")
-            outstream.write(f"Node: {self.__node}, ")
-            outstream.write(f"Time (ms): {self.__time:.3f}, ")
-            outstream.write(f"Memory (MB): {self.__memory:.3f}\n")
-            outstream.write(f"{self.__ways}\n")
+    def save_result(self, outstream):
+        outstream.write(f"{self.__type.name}\n")
+        outstream.write(f"Steps: {self.__step}, ")
+        outstream.write(f"Weight: {self.__weight}, ")
+        outstream.write(f"Node: {self.__node}, ")
+        outstream.write(f"Time (ms): {self.__time:.3f}, ")
+        outstream.write(f"Memory (MB): {self.__memory:.3f}\n")
+        outstream.write(f"{self.__ways}\n")
