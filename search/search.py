@@ -2,6 +2,7 @@ from board import StaticBoard, DynamicBoard, BoardSymbol
 from .search_frontier import SearchFrontier
 from .algorithm import Algorithm
 from .search_result import SearchResult
+from .heuristics import Heuristics
 import time
 import resource
 
@@ -11,6 +12,7 @@ class Search:
         self.__dynamic_board = DynamicBoard(initial_board, stone_weights)
         self.__num_stones = self.__dynamic_board.num_stones
         self.__stone_weights = stone_weights
+        self.__heuristic_calculator = Heuristics(self.__static_board)
         
     def print_info(self):
         self.__static_board.print_board()
@@ -21,7 +23,7 @@ class Search:
         __mem_before = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
         self.min_steps = {}
         self.trade = {}
-        self.virtualWall = [[False for _ in range(self.__static_board.width)] for _ in range(self.__static_board.height)]
+        # self.virtualWall = [[False for _ in range(self.__static_board.width)] for _ in range(self.__static_board.height)]
 
         # save position of entities
         self.entity_positions = [(0, 0) for _ in range(self.__num_stones + 1)]

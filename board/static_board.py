@@ -5,7 +5,6 @@ class StaticBoard(BoardInterface):
     """Include wall, free space, and switch."""
     def __init__(self, initial_board: list[list[str]]):
         super().__init__(initial_board)
-        
         for h in range(self.height):
             for w in range(self.width):
                 if self._board[h][w] not in {BoardSymbol.WALL.value, BoardSymbol.SWITCH.value}:
