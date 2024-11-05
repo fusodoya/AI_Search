@@ -19,7 +19,7 @@ class Search:
     def search(self, algorithm: Algorithm) -> SearchResult:
         __start_time = time.time()
         __mem_before = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-        self.min_weights = {}
+        self.min_steps = {}
         self.trade = {}
         self.virtualWall = [[False for _ in range(self.__static_board.width)] for _ in range(self.__static_board.height)]
 
@@ -35,14 +35,14 @@ class Search:
         hash_code = tuple(self.entity_positions)
         __weight = 0
         __step = 0
-        self.min_weights[hash_code] = (__weight, __step)
+        self.min_steps[hash_code] = __step
         
         self.trade[hash_code] = ((-1, -1), (-1, -1))
         self.warehouse = SearchFrontier(algorithm)
         self.warehouse.add(((__weight, __step), hash_code))
 
         dx = [-1, 0, 1, 0]
-        dy = [0, -1, 0, 1]
+        dy = [0, 1, 0, -1]
         
         __node = 0
         while (True):
@@ -50,6 +50,12 @@ class Search:
                 return SearchResult(algorithm)
             self.final_state = self.warehouse.pop()
             (__weight, __step) = self.final_state[0]
+
+            optimize_step = self.min_steps.get(self.final_state[1])
+            if (__step != optimize_step):
+                self.warehouse.add(((__weight, optimize_step), self.final_state[1]))
+                continue
+
             __node += 1
             num_stones_in_switch = 0
             self.stone_checker = set()
@@ -60,8 +66,6 @@ class Search:
                 
             if (num_stones_in_switch == self.__num_stones):
                 break
-            if((__weight, __step) > self.min_weights.get(self.final_state[1], (0, 0))):
-                continue
 
             # if (self.__advance_check()):
             #     continue
@@ -100,10 +104,14 @@ class Search:
                 
                 hash_code = tuple(new_state)
 
-                if ((new_weight, new_step) < self.min_weights.get(hash_code, (new_weight + 1, new_step))):
-                    self.min_weights[hash_code] = (new_weight, new_step)
+                current_step = self.min_steps.get(hash_code, -1)
+                if (current_step == -1):
+                    self.min_steps[hash_code] = new_step
                     self.trade[hash_code] = self.final_state[1]
                     self.warehouse.add(((new_weight, new_step), hash_code))
+                elif (new_step < current_step):
+                    self.min_steps[hash_code] = new_step
+                    self.trade[hash_code] = self.final_state[1]
 
         ways = ''
         current_state = self.final_state[1]

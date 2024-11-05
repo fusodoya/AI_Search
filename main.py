@@ -28,5 +28,5 @@ if __name__ == "__main__":
             print(row)
     
         controller = Search(table, weights)
-        result = controller.search(Algorithm.BFS)
+        result = controller.search(Algorithm.DFS)
         result.save_result(out_dir)
