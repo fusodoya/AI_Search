@@ -8,7 +8,7 @@ from GUI.MenuScreen import MenuScreen
 pygame.init()
 
 # tạo cửa sổ giao diện trong pygame
-screen = pygame.display.set_mode((500, 600), pygame.RESIZABLE)
+screen = pygame.display.set_mode((1200, 600), pygame.RESIZABLE)
 pygame.display.set_caption("Project 1. Search")
 
 # khai báo màu nền cho giao diện
