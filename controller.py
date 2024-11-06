@@ -6,8 +6,8 @@ class Controller:
     def __init__(self, test_id: str):
         while (len(test_id) < 2):
             test_id = '0' + test_id
-        self.inp_dir = 'input/input-' + test_id + '.txt'
-        self.out_dir = 'output/output-' + test_id + '.txt'
+        self.inp_dir = 'input-' + test_id + '.txt'
+        self.out_dir = 'output-' + test_id + '.txt'
 
         with open(self.inp_dir, 'r') as inpstream:
             input_data = inpstream.read().split('\n')
@@ -43,4 +43,6 @@ class Controller:
             result.save_result(outstream)
 
     def exec(self, algorithm: Algorithm):
-        pass
+        with open(self.out_dir, 'w') as outstream:
+            result = self.controller.search(algorithm)
+            result.save_result(outstream)

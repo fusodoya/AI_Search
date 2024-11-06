@@ -1,12 +1,12 @@
 BFS
-Steps: 77, Weight: 1170, Node: 41119, Time (ms): 350.504, Memory (MB): 0.000
+Steps: 77, Weight: 1170, Node: 41034, Time (ms): 431.258, Memory (MB): 0.000
 DDldddrruuLLdlUruLLLrddlluUUUUluRRRdrUrrDDDDldddrruuLLdlUruLLLrddlluUUUUluRRR
 DFS
-Steps: 1277, Weight: 4360, Node: 7102, Time (ms): 61.640, Memory (MB): 0.000
+Steps: 1277, Weight: 4360, Node: 7048, Time (ms): 82.896, Memory (MB): 0.000
 DldlllllluurruurrrrrDulllllldldddrddrrrrruuurDllllllluurruurrrrrdDDldlllllddrrrrrdrruuLLLdlllluuluurrdrdrDrdLLrrrdrruulUllllllluurruurrrrrddDldlllllddRluuluurrdrdrrdrrUllllllluurruurrrrrddDDllllllddrRlluuluurrdrdrdrdLLrrrdrruuLLLdlUdrrdrruulullLLLdldRRluurrdrdLLrrrdrruuluuuuulllllldldddRluurrdDlddRRlUluluurrdrdrdrdLrrdrruulullllLrrrdrruuuuulllllldldddRddrRdrUllluuluurrdDlluurruurrrrrdddldlddlUdllluuluurrdrdRlllluurruurrrrrdddldLLLLDldRRluurrdrdLLrrrdrruulullllulullddRluurrdDlddRRlUluluurrdrdrdrdLrrdrruulullllLrrrdrruuuuulllllldldddRddrRdrUllluuluurrdDlluurruurrrrrdddldlddlUdllluuluurrdrdRlllluurruurrrrrdddldLLLLrrddllUUddrrrrdrruuluuuuulllllldldddRRlluurrDDDldRRdrUllluuluurrdrrdLLddrrUdlluurRllddrrrrdrruululLLddlluuuullddRluurrdDlluurruurrrrrdddlddldlllUUlluurruurrrrrdddldllLLUdddrrrrdrruuluuuuulllllldldddRluurururrrrrdddldlllulDlluururDllddrrDldRluurUdlluurururrrrrdddldllddLrrrdrruulullllllddRRlluuluurururrrrrdddldlllulUllddrddrrdrUllluuluurrdrdrDrdLLrrrdrruulullllllluurrUlldddrddRluuluuruuRldldddrddrRlluuluurrdrdrdrdLLrrrdrruulullllllluurruuRlldldddrddRluuluurrdrdrddLrrrdrruuluuuuulldlUllldldddrddRluuluurrdrdrddrrdrruuluuuuulllluRldlldldddrddrRdrUUdllluuluurrdrdRlllluurruurrrrrdddldLLLLddrrrrdrruuluuuuulllllldldddRluurrdDlluurruurrrrrdddldllddllUUUUUluRRR
 UCS
-Steps: 77, Weight: 1170, Node: 49306, Time (ms): 434.009, Memory (MB): 0.000
+Steps: 77, Weight: 1170, Node: 49198, Time (ms): 615.372, Memory (MB): 0.000
 DDldddrruuLLdlUruLLLrddlluUUUUluRRRdrUrrDDDDldddrruuLLdlUruLLLrddlluUUUUluRRR
 A_STAR
-Steps: 77, Weight: 1170, Node: 31874, Time (ms): 391.253, Memory (MB): 0.000
+Steps: 77, Weight: 1170, Node: 31766, Time (ms): 481.987, Memory (MB): 0.000
 DDldddrruuLLdlUruLLLrddlluUUUUluRRRdrUrrDDDDldddrruuLLdlUruLLLrddlluUUUUluRRR

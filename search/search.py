@@ -11,7 +11,9 @@ class Search:
         self.__static_board = StaticBoard(initial_board)
         self.__num_stones = self.__dynamic_board.num_stones
         self.__stone_weights = stone_weights
-        
+
+        self.sqX = [0, 0, 1, 1]
+        self.sqY = [0, 1, 0, 1]
         
     def print_info(self):
         self.__static_board.print_board()
@@ -22,7 +24,7 @@ class Search:
         __mem_before = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
         self.min_steps = {}
         self.trade = {}
-        # self.virtualWall = [[False for _ in range(self.__static_board.width)] for _ in range(self.__static_board.height)]
+        self.virtualWall = [[False for _ in range(self.__static_board.width)] for _ in range(self.__static_board.height)]
 
         # save position of entities
         self.entity_positions = [(0, 0) for _ in range(self.__num_stones + 1)]
@@ -98,6 +100,18 @@ class Search:
                         new_state[idx] = stone_pos
                         self.stone_checker.remove((x, y))
                         self.stone_checker.add(stone_pos)
+
+                        for i in range(self.__num_stones):
+                            (x, y) = new_state[i + 1]
+                            self.virtualWall[x][y] = True
+                        if (self.__deadlock_check()):
+                            for i in range(self.__num_stones):
+                                (x, y) = new_state[i + 1]
+                                self.virtualWall[x][y] = False
+                            continue
+                        for i in range(self.__num_stones):
+                                (x, y) = new_state[i + 1]
+                                self.virtualWall[x][y] = False
                 else:
                     if (self.__static_board.board[x][y] == BoardSymbol.WALL.value):
                         continue
@@ -164,16 +178,72 @@ class Search:
         (self.__static_board.board[x][y + 1] == BoardSymbol.WALL.value
         or self.__static_board.board[x][y - 1] == BoardSymbol.WALL.value))
 
+    
+    # Deadlock check
+    def __deadlock_check(self) -> bool:
+        for i in range(self.__num_stones):
+            (x, y) = self.final_state[1][i + 1]
+            if (self.__static_board.board[x][y] == BoardSymbol.SWITCH.value):
+                continue
+            for j in range(4):
+                if (self.__square_check(x - self.sqX[j], y - self.sqY[j])):
+                    return True
+
+            return False
+            # Up Wall
+            if (self.__static_board.board[x - 1][y] == BoardSymbol.WALL.value):
+                if (self.__ziczac((x, y - 1), ((1, 0), (0, -1)))):
+                    return True
+                if (self.__ziczac((x, y + 1), ((1, 0), (0, 1)))):
+                    return True
+            # Right Wall
+            elif (self.__static_board.board[x][y + 1] == BoardSymbol.WALL.value):
+                if (self.__ziczac((x - 1, y), ((0, -1), (-1, 0)))):
+                    return True
+                if (self.__ziczac((x + 1, y), ((0, -1), (1, 0)))):
+                    return True
+            # Down Wall
+            elif (self.__static_board.board[x + 1][y] == BoardSymbol.WALL.value):
+                if (self.__ziczac((x, y - 1), ((-1, 0), (0, -1)))):
+                    return True
+                if (self.__ziczac((x, y + 1), ((-1, 0), (0, 1)))):
+                    return True
+            # Left Wall
+            elif (self.__static_board.board[x][y - 1] == BoardSymbol.WALL.value):
+                if (self.__ziczac((x - 1, y), ((0, 1), (-1, 0)))):
+                    return True
+                if (self.__ziczac((x + 1, y), ((0, 1), (1, 0)))):
+                    return True
+        return False
+
+    def __ziczac(self, position: tuple, way: tuple) -> bool:
+        (x, y) = position
+        role = 0
+        while (self.virtualWall[x][y]):
+            x += way[role][0]
+            y += way[role][1]
+            role ^= 1 
+        return (self.__static_board.board[x][y] == BoardSymbol.WALL.value)
+        
+    
+    def __square_check(self, x: int, y: int) -> bool:
+        for i in range(4):
+            if (self.__static_board.board[x + self.sqX[i]][y + self.sqY[i]] != BoardSymbol.WALL.value
+            and not self.virtualWall[x + self.sqX[i]][y + self.sqY[i]]):
+                return False
+        return True
+
     # Advance update
     def __advance_check(self):
         for i in range(self.__num_stones):
             stone_pos = self.final_state[1][i + 1]
+            notSwitch = (self.__static_board.board[stone_pos[0]][stone_pos[1]] != BoardSymbol.SWITCH.value)
 
             if (self.__is_horizon_wall(stone_pos)):
-                if (self.__dead_block_horizon(stone_pos)):
+                if (self.__dead_block_horizon(stone_pos) and notSwitch):
                     return True
             if (self.__is_vertical_wall(stone_pos)):
-                if (self.__dead_block_vertical(stone_pos)):
+                if (self.__dead_block_vertical(stone_pos) and notSwitch):
                     return True
         return False
 
@@ -194,22 +264,23 @@ class Search:
     def __dead_block_horizon(self, pos: tuple) -> bool:
         (x, y) = pos
         self.virtualWall[x][y] = True
+        notSwitch = (self.__static_board.board[x][y] != BoardSymbol.SWITCH.value)
 
         nearStone = (x + 1, y)
         if (nearStone in self.stone_checker):
-            if (self.__is_horizon_wall(nearStone)):
+            if (self.__is_horizon_wall(nearStone) and notSwitch):
                 self.virtualWall[x][y] = False
                 return True
-            if (self.__dead_block_vertical(nearStone)):
+            if (self.__dead_block_vertical(nearStone) and notSwitch):
                 self.virtualWall[x][y] = False
                 return True
 
         nearStone = (x - 1, y)
         if (nearStone in self.stone_checker):
-            if (self.__is_horizon_wall(nearStone)):
+            if (self.__is_horizon_wall(nearStone) and notSwitch):
                 self.virtualWall[x][y] = False
                 return True
-            if (self.__dead_block_vertical(nearStone)):
+            if (self.__dead_block_vertical(nearStone) and notSwitch):
                 self.virtualWall[x][y] = False
                 return True
         
@@ -219,29 +290,25 @@ class Search:
     def __dead_block_vertical(self, pos: tuple) -> bool:
         (x, y) = pos
         self.virtualWall[x][y] = True
+        notSwitch = (self.__static_board.board[x][y] != BoardSymbol.SWITCH.value)
 
         nearStone = (x, y + 1)
         if (nearStone in self.stone_checker):
-            if (self.__is_vertical_wall(nearStone)):
+            if (self.__is_vertical_wall(nearStone) and notSwitch):
                 self.virtualWall[x][y] = False
                 return True
-            if (self.__dead_block_horizon(nearStone)):
+            if (self.__dead_block_horizon(nearStone) and notSwitch):
                 self.virtualWall[x][y] = False
                 return True
 
         nearStone = (x, y - 1)
         if (nearStone in self.stone_checker):
-            if (self.__is_vertical_wall(nearStone)):
+            if (self.__is_vertical_wall(nearStone) and notSwitch):
                 self.virtualWall[x][y] = False
                 return True
-            if (self.__dead_block_horizon(nearStone)):
+            if (self.__dead_block_horizon(nearStone) and notSwitch):
                 self.virtualWall[x][y] = False
                 return True
         
         self.virtualWall[x][y] = False
         return False
-        
-        
-
-        
-        

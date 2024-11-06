@@ -1,0 +1,46 @@
+with corner check:
+BFS
+Steps: 44, Weight: 1563, Node: 323301, Time (ms): 4358.167, Memory (MB): 134.805
+llLuLLDurrdLLrrrrddlllULuLruLrrrdLLrrrruLLLL
+DFS
+Steps: 78, Weight: 2379, Node: 2462, Time (ms): 80.314, Memory (MB): 0.000
+llLrruulDlLLLddrUluRRRdLLLrrruurrdLLLLdrrurrdLLLLrrrrddlllUluRddrrruulLLulDrdL
+UCS
+Steps: 44, Weight: 1563, Node: 1599674, Time (ms): 35249.570, Memory (MB): 427.309
+llLuLLDurrdLLrrrrddlllULuLruLrrrdLLrrrruLLLL
+A_STAR
+Steps: 44, Weight: 1563, Node: 22454, Time (ms): 972.445, Memory (MB): 0.000
+llLuLLDurrdLLrrrrddlllULuLruLrrrdLLrrrruLLLL
+
+
+with square check:
+BFS
+BFS
+Steps: 44, Weight: 1563, Node: 252228, Time (ms): 5079.134, Memory (MB): 89.043
+llLuLLDurrdLLrrrrddlllULuLruLrrrdLLrrrruLLLL
+DFS
+Steps: 78, Weight: 2379, Node: 922, Time (ms): 49.902, Memory (MB): 0.000
+llLrruulDlLLLddrUluRRRdLLLrrruurrdLLLLdrrurrdLLLLrrrrddlllUluRddrrruulLLulDrdL
+UCS
+Steps: 44, Weight: 1563, Node: 1215213, Time (ms): 29899.696, Memory (MB): 294.727
+llLuLLDurrdLLrrrrddlllULuLruLrrrdLLrrrruLLLL
+A_STAR
+Steps: 44, Weight: 1563, Node: 18369, Time (ms): 864.991, Memory (MB): 0.000
+llLuLLDurrdLLrrrrddlllULuLruLrrrdLLrrrruLLLL
+
+with ziczac check:
+BFS
+Steps: 45, Weight: 1563, Node: 263572, Time (ms): 5464.232, Memory (MB): 91.512
+llLuLLDurrdLLrrrrddlllULuLruLrrrurrdLLLLrrdLL
+DFS
+Steps: 117, Weight: 3207, Node: 1348, Time (ms): 54.180, Memory (MB): 0.000
+llLrruulDlLLLddrUluRRRdLLLrrruurrdLLLLdrrurrdLLLrrrddlllUdrrruullullDldRuRRurrdLLLrrrddlllUdrrruullullDRdLrdrrruulLLL
+UCS
+Steps: 45, Weight: 1563, Node: 1154848, Time (ms): 33805.795, Memory (MB): 298.332
+llLuLLDurrdLLrrrrddlllULuLruLrrrurrdLLLLrrdLL
+A_STAR
+Steps: 45, Weight: 1563, Node: 18353, Time (ms): 916.770, Memory (MB): 0.000
+llLuLLDurrdLLrrrrddlllULuLruLrrrurrdLLLLrrdLL
+
+
+
