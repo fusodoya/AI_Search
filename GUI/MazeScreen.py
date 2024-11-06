@@ -20,6 +20,7 @@ class MazeScreen:
         self.height = 0
         self.isPause = False
         self.speed = 1
+        self.time = 0
         self.font = font
         self.loadingImage = pygame.image.load("GUI/loading.png")
         self.angle = 0
@@ -520,6 +521,7 @@ class MazeScreen:
                         thread = threading.Thread(target=self.generate)
                         output = open(self.outputFileName, "r").read().split("\n")
                         self.maze.set_output(output)
+                        self.maze.restart()
                         thread.start()
 
             if event.button == 3:
