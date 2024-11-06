@@ -14,6 +14,7 @@ class MenuScreen:
         self.font = font
         self.selectedInput = 0
         self.selectedAlgorithm = "BFS"
+        self.resize()
 
     def resize(self):
         if (self.width, self.height) == self.screen.get_size():

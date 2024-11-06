@@ -1,5 +1,6 @@
 import pygame
-from pygame._sdl2.video import Window
+
+# from pygame._sdl2.video import Window
 from GUI.MazeScreen import MazeScreen
 from GUI.MenuScreen import MenuScreen
 
@@ -17,7 +18,7 @@ BACKGROUND_COLOR = (100, 100, 100)
 running = True
 
 #
-Window.from_display_module().maximize()
+# Window.from_display_module().maximize()
 
 mazeScreens = [
     MazeScreen(screen, f"input-{i:02d}.txt", f"output-{i:02d}.txt")
