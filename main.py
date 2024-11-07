@@ -1,5 +1,4 @@
 import pygame
-from controller import Controller
 
 from GUI.MazeScreen import MazeScreen
 from GUI.MenuScreen import MenuScreen
