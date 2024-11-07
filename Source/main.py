@@ -28,7 +28,7 @@ menuScreen = MenuScreen(screen, [mazeScreen.preview() for mazeScreen in mazeScre
 runningMenuScreen = True
 runningMazeScreen = False
 input = 0
-background = pygame.image.load("GUI/image_BackgroundIntro.png")
+background = pygame.image.load("GUI/background.png")
 #
 
 # game loop

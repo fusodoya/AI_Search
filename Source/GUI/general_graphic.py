@@ -1,6 +1,6 @@
 import pygame
 
-sheet = pygame.image.load("GUI/Sheet.png")
+sheet = pygame.image.load("GUI/sheet.png")
 wall = sheet.subsurface(4 + (24 + 4) * 6, 4 + (24 + 4) * 2, 24, 24)
 freeSpace = sheet.subsurface(4, 4 + (24 + 4) * 2, 24, 24)
 stone = sheet.subsurface(4, 4 + (24 + 4), 24, 24)
@@ -42,4 +42,4 @@ switchPlace = sheet.subsurface(4 + (24 + 4), 4 + (24 + 4) * 2, 24, 24)
 stonePlacedOnSwitch = sheet.subsurface(4 + (24 + 4), 4 + (24 + 4), 24, 24)
 other = sheet.subsurface(4, 4 + (24 + 4) * 3, 24, 24)
 componentSize = 24
-font = "GUI/MinecraftBold-nMK1.otf"
+font = "GUI/MinecraftBold.otf"
