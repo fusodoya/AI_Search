@@ -1,5 +1,4 @@
 BFS
-<<<<<<< HEAD
 Steps: 50, Weight: 45, Node: 1690, Time (ms): 84.258, Memory (MB): 0.478
 rDrrddrddLLulLdlUrrrdrruuluullDDuurrddrddllLLrruLL
 DFS
@@ -10,16 +9,4 @@ Steps: 50, Weight: 45, Node: 1703, Time (ms): 84.312, Memory (MB): 0.233
 rDrrddrddLLulLdlUrrrdrruuluullDDuurrddrddllLLrruLL
 A_STAR
 Steps: 50, Weight: 45, Node: 716, Time (ms): 92.948, Memory (MB): 0.098
-=======
-Steps: 50, Weight: 45, Node: 1690, Time (ms): 61.483, Memory (MB): 0.354
-rDrrddrddLLulLdlUrrrdrruuluullDDuurrddrddllLLrruLL
-DFS
-Steps: 52, Weight: 45, Node: 1259, Time (ms): 36.181, Memory (MB): 0.114
-rDDurrddrddLLulLdlUrrrdLLrrrruuluulldDuurrddrddlluLL
-UCS
-Steps: 50, Weight: 45, Node: 1703, Time (ms): 58.472, Memory (MB): 0.236
-rDrrddrddLLulLdlUrrrdrruuluullDDuurrddrddllLLrruLL
-A_STAR
-Steps: 50, Weight: 45, Node: 716, Time (ms): 62.785, Memory (MB): 0.095
->>>>>>> 4857acc60c01164b241f839a524de0cd183d4f59
 rDrrddrddLLulLdlUrrrdrruuluullDDuurrddrddllLLrruLL

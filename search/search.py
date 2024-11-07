@@ -4,10 +4,6 @@ from .algorithm import Algorithm
 from .search_result import SearchResult
 import time
 import tracemalloc
-<<<<<<< HEAD
-
-=======
->>>>>>> 4857acc60c01164b241f839a524de0cd183d4f59
 
 class Search:
     def __init__(self, initial_board: list[list[str]], stone_weights: tuple):
@@ -168,7 +164,6 @@ class Search:
         ways = ways[::-1]
 
         __end_time = time.time()
-<<<<<<< HEAD
         current, peak = tracemalloc.get_traced_memory()
         tracemalloc.clear_traces()
         tracemalloc.stop()
@@ -180,16 +175,6 @@ class Search:
             algorithm, len(ways), __weight, __node, __time, __memory, ways
         )
 
-=======
-        peak = tracemalloc.get_traced_memory()[1]
-        tracemalloc.stop()
-
-        __time = (__end_time - __start_time) * 1000
-        __memory = peak / (1024*1024)
-        
-        return SearchResult(algorithm, len(ways), __weight, __node, __time, __memory, ways)
-    
->>>>>>> 4857acc60c01164b241f839a524de0cd183d4f59
     def __find_move_code(self, prev_pos, current_pos, is_push) -> str:
         if current_pos[0] - prev_pos[0] == 1:
             move_code = "d"
