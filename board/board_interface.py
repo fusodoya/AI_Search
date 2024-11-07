@@ -29,10 +29,8 @@ class BoardInterface(ABC):
         return self.__width
     
     @property
-    def board(self) -> list[list[str]]:
-        """Copy of current board."""
-        copied_board = self.__copy_board(self._board)
-        return copied_board
+    def board(self):
+        return self._board
     
     @abstractmethod
     def print_board(self) -> None:

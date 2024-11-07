@@ -1,6 +1,6 @@
 import pygame
+from controller import Controller
 
-# from pygame._sdl2.video import Window
 from GUI.MazeScreen import MazeScreen
 from GUI.MenuScreen import MenuScreen
 

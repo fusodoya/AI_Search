@@ -27,11 +27,11 @@ class DynamicBoard(BoardInterface):
 
         # self.__num_stones = len(stone_weights)
     
-    @property
-    def board(self) -> list[list[EntityInterface | None]]:
-        """Copy of current board."""
-        copied_board = super().board
-        return copied_board
+    # @property
+    # def board(self) -> list[list[EntityInterface | None]]:
+    #     """Copy of current board."""
+    #     copied_board = super().board
+    #     return copied_board
       
     def print_board(self) -> None:
         print("Dynamic board (include Ares and stones):")
