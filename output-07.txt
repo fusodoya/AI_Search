@@ -1,4 +1,5 @@
 BFS
+<<<<<<< HEAD
 Steps: 87, Weight: 452, Node: 33022, Time (ms): 3331.322, Memory (MB): 8.163
 DldddrruLLuurDDldlluRdrUrrdLLLulDurrruulDDrdLLdLLdlluluurrdDldRurrruulDrdLLDlluluurrdDD
 DFS
@@ -9,4 +10,16 @@ Steps: 87, Weight: 452, Node: 29291, Time (ms): 2895.639, Memory (MB): 7.345
 DldddrruLLuurDDldlluRdrUrrdLLLulDrdLLdlluluurrdDldRurruurrruulDDrdLLulDrdLLDlluluurrdDD
 A_STAR
 Steps: 87, Weight: 452, Node: 8374, Time (ms): 1796.899, Memory (MB): 1.811
+=======
+Steps: 87, Weight: 452, Node: 33022, Time (ms): 1442.549, Memory (MB): 8.176
+DldddrruLLuurDDldlluRdrUrrdLLLulDurrruulDDrdLLdLLdlluluurrdDldRurrruulDrdLLDlluluurrdDD
+DFS
+Steps: 213, Weight: 868, Node: 13174, Time (ms): 604.876, Memory (MB): 3.203
+DldddrruLLuurDDldlluRdrUrrdLLLrruuulDDllDrdLLLrrruRlldlluullddRluurrdDlddrruLrurrururrdLLLdlllddlUdrruuluullddRluurrdDlddrUUrrruulDrdLLLUUllddRluurrdDlluurrUlldddrddrruLdlUdrruuluulluuurrDDDDDDldRuuuullddRluurrdDD
+UCS
+Steps: 87, Weight: 452, Node: 29291, Time (ms): 1374.982, Memory (MB): 7.350
+DldddrruLLuurDDldlluRdrUrrdLLLulDrdLLdlluluurrdDldRurruurrruulDDrdLLulDrdLLDlluluurrdDD
+A_STAR
+Steps: 87, Weight: 452, Node: 8374, Time (ms): 3559.506, Memory (MB): 1.813
+>>>>>>> 4857acc60c01164b241f839a524de0cd183d4f59
 DldddrruLLuurDDldlluRdrUrrdLLLulDrdLLdlluluurrdDldRurruurrruulDDrdLLulDrdLLDlluluurrdDD
