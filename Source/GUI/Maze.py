@@ -26,6 +26,7 @@ class Maze:
         self.setAlgorithm(self.algorithm)
 
     def setAlgorithm(self, algorithm: str):
+        self.restart()
         if algorithm == "BFS":
             self.algorithm = "BFS"
             self.grid.setAlgorithm(self.output[2])
@@ -46,7 +47,6 @@ class Maze:
         self.node = parts[2]
         self.time = parts[3]
         self.memory = parts[4]
-        self.restart()
 
     def restart(self):
         self.grid.restart()

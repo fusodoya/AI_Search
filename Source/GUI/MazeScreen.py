@@ -245,6 +245,8 @@ class MazeScreen:
         if self.running:
             if pygame.time.get_ticks() - self.time > 500 / self.speed:
                 self.maze.next()
+                if self.maze.grid.step == len(self.maze.grid.algorithm):
+                    self.running = False
                 self.time = pygame.time.get_ticks()
         previousMap = pygame.font.Font(self.font, self.footerHeight).render(
             "<", True, (255, 255, 255)
